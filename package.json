@@ -18,5 +18,8 @@
     "bugs": {
         "url": "https://github.com/kuzya19989/collab-it-server/issues"
     },
-    "homepage": "https://github.com/kuzya19989/collab-it-server#readme"
+    "homepage": "https://github.com/kuzya19989/collab-it-server#readme",
+    "dependencies": {
+        "express": "^4.17.1"
+    }
 }
