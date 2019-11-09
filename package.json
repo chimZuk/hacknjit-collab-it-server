@@ -1,0 +1,22 @@
+{
+    "name": "collab-it-server",
+    "version": "1.0.0",
+    "description": "Collab It!",
+    "main": "index.js",
+    "scripts": {
+        "test": "nodemon.js index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/kuzya19989/collab-it-server.git"
+    },
+    "keywords": [
+        "collab"
+    ],
+    "author": "chimZuk",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/kuzya19989/collab-it-server/issues"
+    },
+    "homepage": "https://github.com/kuzya19989/collab-it-server#readme"
+}
