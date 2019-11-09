@@ -2,7 +2,11 @@ const express = require('express')
 const app = express()
 const port = 80
 
-const MongoClient = require('mongodb').MongoClient;
+app.get('/', (req, res) => res.send('Hello World!'))
+
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
+/*const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://chimzuk:4115Mama@collab-iw4gh.azure.mongodb.net/test?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true });
 
@@ -48,8 +52,4 @@ client.connect(err => {
     });
 
     client.close();
-});
-
-app.get('/', (req, res) => res.send('Hello World!'))
-
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+});*/
