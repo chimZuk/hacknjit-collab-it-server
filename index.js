@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Point static path to dist
-app.use(express.static(path.join(__dirname, 'dist/chimZuk')));
+app.use(express.static(path.join(__dirname, '../collab-it/')));
 
 // Set our api routesclea
 app.use('/api', api);
@@ -27,7 +27,7 @@ app.get('*', (req, res) => {
 /**
  * Get port from environment and store in Express.
  */
-const port = process.env.PORT || '8080';
+const port = process.env.PORT || '80';
 app.set('port', port);
 
 /**
