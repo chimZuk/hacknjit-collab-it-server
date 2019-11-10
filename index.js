@@ -10,6 +10,13 @@ let io = socketIO(server);
 let api = require('./routes/api');
 
 let port = process.env.PORT || 80;
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://chimzuk:4115Mama@collab-iw4gh.azure.mongodb.net/test?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true });
+client.connect(err => {
+    const collection = client.db("collab_it").collection("users");
+    client.close();
+});
 
 var messageCounter = 0;
 
