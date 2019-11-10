@@ -294,7 +294,9 @@ io.on('connection', (socket) => {
     socket.on('user-joined', (user) => {
         var pushed = false;
         user.main = false;
-        user.score = 0;
+        if (!user.score) {
+            user.score = 0;
+        }
         for (var i = 0; i < players.length; i++) {
             if (players[i].UserName == user.UserName) {
                 io.emit('user-joined', {
@@ -320,7 +322,7 @@ io.on('connection', (socket) => {
 
         messages.push(message);
 
-        if (message.text.trim().toLowerCase() == word) {
+        if (message.text.trim().toLowerCase() == word && !message.main) {
             clearInterval(timeInterval);
             clearTimeout(gameTimeout);
             restartGame(true, message);
@@ -355,57 +357,113 @@ function getRandomInt(max) {
 function restartGame(hasWinner, message = {}) {
     var secsCounter = 60;
     messages = [];
+    var scores = [];
 
-    pizza = init_pizza;
-    toppings = init_toppings;
-    sauces = init_sauces;
-    base = init_base;
+    if (hasWinner) {
+        for (var i = 0; i < players.length; i++) {
+            if (players[i].main) {
+                if (message.time > 30) {
+                    players[i].score += 0;
+                } else {
+                    if (message.time < 31 && message.time > 10) {
+                        players[i].score -= 0.1;
+                    } else {
+                        players[i].score -= 0.3;
+                    }
+                }
+                if (players[i].score < 0) {
+                    players[i].score = 0;
+                }
+                break;
+            }
+        }
+    } else {
+        for (var i = 0; i < players.length; i++) {
+            if (players[i].main) {
+                players[i].score -= 0.5;
+                if (players[i].score < 0) {
+                    players[i].score = 0;
+                }
+                break;
+            }
+        }
+    }
 
-    for (var i = 0; i < players.length; i++) {
-        players[i].main = false;
-        if (players[i].UserName == message.senderName) {
-            players[i].score++;
-            players[i].main = true;
+    players.forEach(function(el) {
+        scores.push(el);
+    });
+
+    players = [];
+    io.emit('ping', { message: "ping" });
+
+    setTimeout(function() {
+        for (var i = 0; i < players.length; i++) {
+            for (var j = 0; j < scores.length; j++) {
+                if (players[i].UserName == scores[j].UserName) {
+                    players[i].score = scores[j].score;
+                }
+            }
+        }
+
+        pizza = init_pizza;
+        toppings = init_toppings;
+        sauces = init_sauces;
+        base = init_base;
+        for (var i = 0; i < players.length; i++) {
+            players[i].main = false;
+            if (players[i].UserName == message.senderName) {
+                if (message.time > 30) {
+                    players[i].score += 1;
+                } else {
+                    if (message.time < 31 && message.time > 10) {
+                        players[i].score += 0.7;
+                    } else {
+                        players[i].score += 0.3;
+                    }
+                }
+
+                players[i].main = true;
+                io.emit('endgame', {
+                    nextPlayer: players[i],
+                    word: word,
+                    hasWinner: hasWinner
+                });
+            }
+        }
+
+        if (!hasWinner && players.length != 0) {
+            var nextPlayer = getRandomInt(players.length);
+            players[nextPlayer].main = true;
             io.emit('endgame', {
-                nextPlayer: players[i],
+                nextPlayer: players[nextPlayer],
                 word: word,
                 hasWinner: hasWinner
             });
         }
-    }
 
-    if (!hasWinner && players.length != 0) {
-        var nextPlayer = getRandomInt(players.length);
-        players[nextPlayer].main = true;
-        io.emit('endgame', {
-            nextPlayer: players[nextPlayer],
-            word: word,
-            hasWinner: hasWinner
+        var nextPizza = getRandomInt(pizzatypes.length);
+        word = pizzatypes[nextPizza].name;
+
+        io.emit('users', players.sort((a, b) => (a.score < b.score) ? 1 : -1));
+        io.emit('messages', { messages: messages, word: word });
+        io.emit('pizza-data', {
+            pizza: pizza,
+            sauces: sauces,
+            base: base,
+            toppings: toppings
         });
-    }
 
-    var nextPizza = getRandomInt(pizzatypes.length);
-    word = pizzatypes[nextPizza].name;
+        timeInterval = setInterval(function() {
+            io.emit('time', secsCounter);
+            secsCounter--;
+            console.log(word);
+        }.bind(this), 1000);
 
-    io.emit('users', players.sort((a, b) => (a.score < b.score) ? 1 : -1));
-    io.emit('messages', { messages: messages, word: word });
-    io.emit('pizza-data', {
-        pizza: pizza,
-        sauces: sauces,
-        base: base,
-        toppings: toppings
-    });
-
-    timeInterval = setInterval(function() {
-        console.log(secsCounter + "s");
-        io.emit('time', secsCounter);
-        secsCounter--;
-    }.bind(this), 1000);
-
-    gameTimeout = setTimeout(function() {
-        clearInterval(timeInterval);
-        restartGame(false);
-    }.bind(this), 61000)
+        gameTimeout = setTimeout(function() {
+            clearInterval(timeInterval);
+            restartGame(false);
+        }.bind(this), 61000)
+    }, 1000);
 }
 
 restartGame();
