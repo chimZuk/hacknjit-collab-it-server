@@ -31,80 +31,204 @@ let players = [];
 let messages = [];
 let word = "pizza";
 
-let toppings = [{
+let init_toppings = [{
         "name": "White Cheese",
         "src": "../../../../assets/img/white-cheese.png",
-        "icon": "../../../../assets/img/white-cheese_ico.png"
+        "icon": "../../../../assets/img/white-cheese_ico.png",
+        "type": "toppings"
     },
     {
         "name": "Parmigiano",
         "src": "../../../../assets/img/parmigiano.png",
-        "icon": "../../../../assets/img/parmigiano_ico.png"
+        "icon": "../../../../assets/img/parmigiano_ico.png",
+        "type": "toppings"
     },
     {
         "name": "Ham",
         "src": "../../../../assets/img/ham.png",
-        "icon": "../../../../assets/img/ham_ico.png"
+        "icon": "../../../../assets/img/ham_ico.png",
+        "type": "toppings"
     },
     {
         "name": "Chicken",
         "src": "../../../../assets/img/chicken.png",
-        "icon": "../../../../assets/img/chicken_ico.png"
+        "icon": "../../../../assets/img/chicken_ico.png",
+        "type": "toppings"
     },
     {
         "name": "Bacon",
         "src": "../../../../assets/img/bacon.png",
-        "icon": "../../../../assets/img/bacon_ico.png"
+        "icon": "../../../../assets/img/bacon_ico.png",
+        "type": "toppings"
     },
     {
         "name": "Pepperoni",
         "src": "../../../../assets/img/pepperoni.png",
-        "icon": "../../../../assets/img/pepperoni_ico.png"
+        "icon": "../../../../assets/img/pepperoni_ico.png",
+        "type": "toppings"
     },
     {
         "name": "Sausage",
         "src": "../../../../assets/img/sausage.png",
-        "icon": "../../../../assets/img/sausage_ico.png"
+        "icon": "../../../../assets/img/sausage_ico.png",
+        "type": "toppings"
     },
     {
         "name": "Tomatoes",
         "src": "../../../../assets/img/tomatoes.png",
-        "icon": "../../../../assets/img/tomatoes_ico.png"
+        "icon": "../../../../assets/img/tomatoes_ico.png",
+        "type": "toppings"
     },
     {
         "name": "Peppers",
         "src": "../../../../assets/img/peppers.png",
-        "icon": "../../../../assets/img/peppers_ico.png"
+        "icon": "../../../../assets/img/peppers_ico.png",
+        "type": "toppings"
     },
     {
         "name": "Mushrooms",
         "src": "../../../../assets/img/mushrooms.png",
-        "icon": "../../../../assets/img/mushrooms_ico.png"
+        "icon": "../../../../assets/img/mushrooms_ico.png",
+        "type": "toppings"
     },
     {
         "name": "Pineapples",
         "src": "../../../../assets/img/pineapples.png",
-        "icon": "../../../../assets/img/pineapples_ico.png"
+        "icon": "../../../../assets/img/pineapples_ico.png",
+        "type": "toppings"
     },
     {
         "name": "Basil",
         "src": "../../../../assets/img/basil.png",
-        "icon": "../../../../assets/img/basil_ico.png"
+        "icon": "../../../../assets/img/basil_ico.png",
+        "type": "toppings"
     }
 ];
-let base = [
-    { "name": "Square", "src": "../../../../assets/img/square_ico.png", "icon": "../../../../assets/img/square_ico.png" },
-    { "name": "Round", "src": "../../../../assets/img/round.png", "icon": "../../../../assets/img/round_ico.png" }
+let init_base = [{
+        "name": "Square",
+        "src": "../../../../assets/img/square_ico.png",
+        "icon": "../../../../assets/img/square_ico.png",
+        "type": "base"
+    },
+    {
+        "name": "Round",
+        "src": "../../../../assets/img/round.png",
+        "icon": "../../../../assets/img/round_ico.png",
+        "type": "base"
+    }
 ];
-let sauces = [{
+let init_sauces = [{
         "name": "Ranch",
         "src": "../../../../assets/img/ranch.png",
-        "icon": "../../../../assets/img/ranch_ico.png"
+        "icon": "../../../../assets/img/ranch_ico.png",
+        "type": "sauces"
     },
     {
         "name": "Tomato",
         "src": "../../../../assets/img/tomato.png",
-        "icon": "../../../../assets/img/tomato_ico.png"
+        "icon": "../../../../assets/img/tomato_ico.png",
+        "type": "sauces"
+    }
+];
+let init_pizza = [];
+
+let toppings = [{
+        "name": "White Cheese",
+        "src": "../../../../assets/img/white-cheese.png",
+        "icon": "../../../../assets/img/white-cheese_ico.png",
+        "type": "toppings"
+    },
+    {
+        "name": "Parmigiano",
+        "src": "../../../../assets/img/parmigiano.png",
+        "icon": "../../../../assets/img/parmigiano_ico.png",
+        "type": "toppings"
+    },
+    {
+        "name": "Ham",
+        "src": "../../../../assets/img/ham.png",
+        "icon": "../../../../assets/img/ham_ico.png",
+        "type": "toppings"
+    },
+    {
+        "name": "Chicken",
+        "src": "../../../../assets/img/chicken.png",
+        "icon": "../../../../assets/img/chicken_ico.png",
+        "type": "toppings"
+    },
+    {
+        "name": "Bacon",
+        "src": "../../../../assets/img/bacon.png",
+        "icon": "../../../../assets/img/bacon_ico.png",
+        "type": "toppings"
+    },
+    {
+        "name": "Pepperoni",
+        "src": "../../../../assets/img/pepperoni.png",
+        "icon": "../../../../assets/img/pepperoni_ico.png",
+        "type": "toppings"
+    },
+    {
+        "name": "Sausage",
+        "src": "../../../../assets/img/sausage.png",
+        "icon": "../../../../assets/img/sausage_ico.png",
+        "type": "toppings"
+    },
+    {
+        "name": "Tomatoes",
+        "src": "../../../../assets/img/tomatoes.png",
+        "icon": "../../../../assets/img/tomatoes_ico.png",
+        "type": "toppings"
+    },
+    {
+        "name": "Peppers",
+        "src": "../../../../assets/img/peppers.png",
+        "icon": "../../../../assets/img/peppers_ico.png",
+        "type": "toppings"
+    },
+    {
+        "name": "Mushrooms",
+        "src": "../../../../assets/img/mushrooms.png",
+        "icon": "../../../../assets/img/mushrooms_ico.png",
+        "type": "toppings"
+    },
+    {
+        "name": "Pineapples",
+        "src": "../../../../assets/img/pineapples.png",
+        "icon": "../../../../assets/img/pineapples_ico.png",
+        "type": "toppings"
+    },
+    {
+        "name": "Basil",
+        "src": "../../../../assets/img/basil.png",
+        "icon": "../../../../assets/img/basil_ico.png",
+        "type": "toppings"
+    }
+];
+let base = [{
+        "name": "Square",
+        "src": "../../../../assets/img/square_ico.png",
+        "icon": "../../../../assets/img/square_ico.png",
+        "type": "base"
+    },
+    {
+        "name": "Round",
+        "src": "../../../../assets/img/round.png",
+        "icon": "../../../../assets/img/round_ico.png",
+        "type": "base"
+    }
+];
+let sauces = [{
+        "name": "Ranch",
+        "src": "../../../../assets/img/ranch.png",
+        "icon": "../../../../assets/img/ranch_ico.png",
+        "type": "sauces"
+    },
+    {
+        "name": "Tomato",
+        "src": "../../../../assets/img/tomato.png",
+        "icon": "../../../../assets/img/tomato_ico.png",
+        "type": "sauces"
     }
 ];
 let pizza = [];
@@ -186,6 +310,11 @@ function restartGame(hasWinner, message = {}) {
     var secsCounter = 60;
     messages = [];
 
+    pizza = init_pizza;
+    toppings = init_toppings;
+    sauces = init_sauces;
+    base = init_base;
+
     for (var i = 0; i < players.length; i++) {
         players[i].main = false;
         if (players[i].UserName == message.senderName) {
@@ -211,6 +340,12 @@ function restartGame(hasWinner, message = {}) {
 
     io.emit('users', players.sort((a, b) => (a.score < b.score) ? 1 : -1));
     io.emit('messages', { messages: messages, word: word });
+    io.emit('pizza-data', {
+        pizza: pizza,
+        sauces: sauces,
+        base: base,
+        toppings: toppings
+    });
 
     timeInterval = setInterval(function() {
         console.log(secsCounter + "s");
