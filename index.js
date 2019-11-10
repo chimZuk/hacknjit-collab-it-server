@@ -28,16 +28,98 @@ app.get('*', (req, res) => {
 });
 
 let players = [];
-
 let messages = [];
-
 let word = "pizza";
+
+let toppings = [{
+        "name": "White Cheese",
+        "src": "../../../../assets/img/white-cheese.png",
+        "icon": "../../../../assets/img/white-cheese_ico.png"
+    },
+    {
+        "name": "Parmigiano",
+        "src": "../../../../assets/img/parmigiano.png",
+        "icon": "../../../../assets/img/parmigiano_ico.png"
+    },
+    {
+        "name": "Ham",
+        "src": "../../../../assets/img/ham.png",
+        "icon": "../../../../assets/img/ham_ico.png"
+    },
+    {
+        "name": "Chicken",
+        "src": "../../../../assets/img/chicken.png",
+        "icon": "../../../../assets/img/chicken_ico.png"
+    },
+    {
+        "name": "Bacon",
+        "src": "../../../../assets/img/bacon.png",
+        "icon": "../../../../assets/img/bacon_ico.png"
+    },
+    {
+        "name": "Pepperoni",
+        "src": "../../../../assets/img/pepperoni.png",
+        "icon": "../../../../assets/img/pepperoni_ico.png"
+    },
+    {
+        "name": "Sausage",
+        "src": "../../../../assets/img/sausage.png",
+        "icon": "../../../../assets/img/sausage_ico.png"
+    },
+    {
+        "name": "Tomatoes",
+        "src": "../../../../assets/img/tomatoes.png",
+        "icon": "../../../../assets/img/tomatoes_ico.png"
+    },
+    {
+        "name": "Peppers",
+        "src": "../../../../assets/img/peppers.png",
+        "icon": "../../../../assets/img/peppers_ico.png"
+    },
+    {
+        "name": "Mushrooms",
+        "src": "../../../../assets/img/mushrooms.png",
+        "icon": "../../../../assets/img/mushrooms_ico.png"
+    },
+    {
+        "name": "Pineapples",
+        "src": "../../../../assets/img/pineapples.png",
+        "icon": "../../../../assets/img/pineapples_ico.png"
+    },
+    {
+        "name": "Basil",
+        "src": "../../../../assets/img/basil.png",
+        "icon": "../../../../assets/img/basil_ico.png"
+    }
+];
+let base = [
+    { "name": "Square", "src": "../../../../assets/img/square_ico.png", "icon": "../../../../assets/img/square_ico.png" },
+    { "name": "Round", "src": "../../../../assets/img/round.png", "icon": "../../../../assets/img/round_ico.png" }
+];
+let sauces = [{
+        "name": "Ranch",
+        "src": "../../../../assets/img/ranch.png",
+        "icon": "../../../../assets/img/ranch_ico.png"
+    },
+    {
+        "name": "Tomato",
+        "src": "../../../../assets/img/tomato.png",
+        "icon": "../../../../assets/img/tomato_ico.png"
+    }
+];
+let pizza = [];
 
 io.on('connection', (socket) => {
     console.log('CONNECTION: User connected');
 
     io.emit('users', players.sort((a, b) => (a.score < b.score) ? 1 : -1));
     io.emit('messages', { messages: messages, word: word });
+    io.emit('pizza-data', {
+        pizza: pizza,
+        sauces: sauces,
+        base: base,
+        toppings: toppings
+    });
 
     socket.on('user-joined', (user) => {
         var pushed = false;
@@ -82,6 +164,14 @@ io.on('connection', (socket) => {
             }
         }
         io.emit('message-hotness', message);
+    });
+
+    socket.on('pizza-drag', (message) => {
+        pizza = message.pizza;
+        toppings = message.toppings;
+        sauces = message.sauces;
+        base = message.base;
+        io.emit('pizza-data', message);
     });
 });
 
