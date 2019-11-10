@@ -27,17 +27,17 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../collab-it/index.html'));
 });
 
-let word = "";
-
 let players = [];
 
 let messages = [];
+
+let word = "pizza";
 
 io.on('connection', (socket) => {
     console.log('CONNECTION: User connected');
 
     io.emit('users', players.sort((a, b) => (a.score < b.score) ? 1 : -1));
-    io.emit('messages', messages);
+    io.emit('messages', { messages: messages, word: word });
 
     socket.on('user-joined', (user) => {
         var pushed = false;
@@ -94,7 +94,6 @@ function getRandomInt(max) {
 
 function restartGame(hasWinner, message = {}) {
     var secsCounter = 60;
-    word = "pizza";
     messages = [];
 
     for (var i = 0; i < players.length; i++) {
@@ -121,7 +120,7 @@ function restartGame(hasWinner, message = {}) {
     }
 
     io.emit('users', players.sort((a, b) => (a.score < b.score) ? 1 : -1));
-    io.emit('messages', messages);
+    io.emit('messages', { messages: messages, word: word });
 
     timeInterval = setInterval(function() {
         console.log(secsCounter + "s");
